@@ -2,7 +2,7 @@ import { throttle } from 'lodash';
 
 const form = document.querySelector('.feedback-form');
 const LOCALSTORAGE_KEY = 'feedback-form-state';
-console.log(form);
+// console.log(form);
 const formData = {};
 initForm();
 const throttledInput = throttle(onInput, 500);
@@ -15,6 +15,10 @@ function onInput(event) {
 form.addEventListener('input', throttledInput);
 form.addEventListener('submit', e => {
   e.preventDefault();
+  if (!e.currentTarget.elements.email.value || !e.currentTarget.elements.message.value) {
+    alert('Необходимо заполнить все поля');
+    return;
+  }
   console.log(formData);
   localStorage.removeItem(LOCALSTORAGE_KEY);
   form.reset();
